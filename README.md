@@ -6,9 +6,9 @@ It wipes the whole stack and the CPU's scratch registers when your function retu
 Cryptographic code leaves a lot behind on the stack:
 
 - Expanded keys
-- Nonces
 - Hash states
 - Spilled registers
+- ...
 
 None of that gets cleared when the function returns.
 It sits below the stack pointer until something else overwrites it.
