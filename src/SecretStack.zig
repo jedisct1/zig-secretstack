@@ -6,7 +6,7 @@
 //! Big fat warning: a `SecretStack` can't be shared by threads running at the same time.
 //! Give each thread its own, or keep a pool of them.
 //!
-//! The function must not suspend (evented `std.Io` operations).
+//! Also: the function must not suspend (evented `std.Io` operations).
 
 const std = @import("std");
 const builtin = @import("builtin");
