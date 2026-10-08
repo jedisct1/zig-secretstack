@@ -49,6 +49,7 @@ Key generation and encapsulation get their randomness from the `io` you pass in,
 Not sure how big the stack needs to be?
 
 `measure()` works like `run()`, but also returns roughly how many bytes were used.
+
 Set `Options.size` a bit higher to leave some room, and measure in debug builds too, since they use a lot more stack.
 
 ## Limitations
