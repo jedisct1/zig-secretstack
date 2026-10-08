@@ -11,11 +11,9 @@ Cryptographic code leaves a lot behind on the stack:
 - ...
 
 None of that gets cleared when the function returns.
-It sits below the stack pointer until something else overwrites it.
-A core dump, an uninitialized read, or another memory disclosure bug can expose it.
+It sits below the stack pointer until something else overwrites it. And a core dump, an uninitialized read, or another memory disclosure bug can expose it.
 
-Can't you just zero every local by hand?
-That doesn't help much, since the compiler can spill copies wherever it wants.
+Is it possible to just zero every local by hand? Unfortunately, that wouldn't help much, since the compiler can still spill copies wherever it wants.
 
 `SecretStack` runs your function on its own memory mapping.
 On the way back, it zeros that mapping and clears the CPU's scratch registers, since those can hold secrets too.
@@ -43,14 +41,14 @@ const shared_secret = try stack.run(MLKem768.SecretKey.decaps, .{
 });
 ```
 
-You can pass `run` any function known at compile time and a tuple of its arguments.
+You can pass `run()` any function known at compile time and a tuple of its arguments.
 It returns whatever your function returns.
 
 Key generation and encapsulation get their randomness from the `io` you pass in, so the random seeds stay on the secret stack too.
 
 Not sure how big the stack needs to be?
 
-`measure` works like `run`, but also returns roughly how many bytes were used.
+`measure()` works like `run()`, but also returns roughly how many bytes were used.
 Set `Options.size` a bit higher to leave some room, and measure in debug builds too, since they use a lot more stack.
 
 ## Limitations
